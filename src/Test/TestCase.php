@@ -4,6 +4,7 @@ namespace Jetimob\Orulo\Test;
 
 use Jetimob\Orulo\Facade\Orulo;
 use Jetimob\Orulo\Lib\Http\Api\ErrorResponse;
+use Jetimob\Orulo\Lib\Http\Auth\AuthType;
 use Jetimob\Orulo\Lib\Http\Auth\TokenResponse;
 use Jetimob\Orulo\Lib\Http\Request;
 use Jetimob\Orulo\Lib\Http\Response;

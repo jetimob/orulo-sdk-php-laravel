@@ -31,7 +31,7 @@ class PublicationLinksRequest extends PutRequest
 
     public function urn(): string
     {
-        return 'building/{buildingId}/publication_links';
+        return 'buildings/{buildingId}/publication_links';
     }
 
     public function authType(): ?int

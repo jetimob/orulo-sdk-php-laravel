@@ -86,7 +86,7 @@ MSG,
      * @throws WrongRequestTypeException
      * @throws WrongResponseTypeException
      */
-    public function request($request, string $clientId, string $clientSecret)
+    public function request($request, string $clientId, string $clientSecret, bool $errored = false)
     {
         if (is_string($request)) {
             $request = new $request();
@@ -127,6 +127,12 @@ MSG,
             $oruloResponse->setStatusCode($response->getStatusCode());
         } catch (ClientException | ServerException $e) {
             $errorResponse = $e->getResponse();
+
+            if (!$errored && $errorResponse->getStatusCode() === 401) {
+                Cache::del($this->getCacheKey($clientId, $request->authType()));
+                return $this->request($request, $clientId, $clientSecret, true);
+            }
+
             $oruloResponse = ErrorResponse::deserialize($errorResponse->getBody()->getContents());
             $oruloResponse->setStatusCode($errorResponse->getStatusCode());
         } catch (Exception $e) {

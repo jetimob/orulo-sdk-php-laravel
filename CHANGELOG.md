@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/jetimob/orulo-sdk-php-laravel/compare/v1.2.0...v2.0.0) (2022-09-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* não suporta versões do PHP anteriores ao PHP 8
+
+* atualizada dependências do projeto ([47951ff](https://github.com/jetimob/orulo-sdk-php-laravel/commit/47951ff5ad012aa9f7a0d7bef2e246e0a76f9c3e))
+
 ## [1.2.0](https://github.com/jetimob/orulo-sdk-php-laravel/compare/v1.1.1...v1.2.0) (2022-03-02)
 
 

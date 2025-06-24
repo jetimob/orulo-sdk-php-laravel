@@ -13,6 +13,8 @@ trait BuildingTrait
     /** @var Developer $developer 'incorporadora' */
     protected Developer $developer;
 
+    protected Publisher $publisher;
+
     protected Address $address;
 
     /** @var float $min_price minimum value of a building's unit */
@@ -83,6 +85,11 @@ trait BuildingTrait
     public function getDeveloper(): ?Developer
     {
         return $this->developer ?? null;
+    }
+
+    public function getPublisher(): ?Publisher
+    {
+        return $this->publisher ?? null;
     }
 
     /**

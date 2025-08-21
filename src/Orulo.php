@@ -108,7 +108,6 @@ MSG,
         }
 
         try {
-            // $response = $this->apiClient->request($request->getMethod(), $request->getUrn(), $requestOptions);
             $response = $this->client->send(new HttpRequest(
                 $request->getMethod(),
                 $request->getUrn(),

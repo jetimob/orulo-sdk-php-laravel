@@ -7,6 +7,8 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\ServerException;
 use GuzzleHttp\RequestOptions;
+use Jetimob\Http\Http;
+use Jetimob\Http\Request as HttpRequest;
 use Jetimob\Orulo\Exception\ConfigurationException;
 use Jetimob\Orulo\Exception\EmptyResponseClassException;
 use Jetimob\Orulo\Exception\OruloException;
@@ -33,13 +35,11 @@ class Orulo
 
     private array $config;
 
-    private array $guzzleOptions;
-
     private ?TokenResponse $authorizationToken = null;
 
     private ?TokenResponse $testAuthorizationToken = null;
 
-    private Client $apiClient;
+    private Http $client;
 
     /**
      * Orulo constructor.
@@ -49,8 +49,6 @@ class Orulo
     public function __construct(array $config = [])
     {
         $this->config = $config;
-        /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
-        $this->guzzleOptions = $this->getConfig('guzzle', []);
 
         foreach (self::CONFIG_FILE_REQUIRED_KEYS as $key) {
             if (!array_key_exists($key, $config) || empty($config[$key])) {
@@ -66,8 +64,7 @@ MSG,
             }
         }
 
-        $this->apiClient = new Client($this->guzzleOptions);
-        /** @noinspection PhpFieldAssignmentTypeMismatchInspection */
+        $this->client = new Http($config['http'] ?? []);
         Log::$enabled = $this->getConfig('logging', false);
     }
 
@@ -111,7 +108,12 @@ MSG,
         }
 
         try {
-            $response = $this->apiClient->request($request->getMethod(), $request->getUrn(), $requestOptions);
+            $response = $this->client->send(new HttpRequest(
+                $request->getMethod(),
+                $request->getUrn(),
+                $requestOptions[RequestOptions::HEADERS] ?? [],
+                $requestOptions[RequestOptions::BODY] ?? null
+            ), $requestOptions);
             $responseClassName = $request->getResponseClass();
 
             if (empty($responseClassName)) {
